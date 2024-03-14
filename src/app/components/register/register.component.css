@@ -1,0 +1,84 @@
+/* login-form.component.css */
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-image: url('../../../assets/purchaserseller.jpg'); /* Adjust the path based on your file structure */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  
+  }
+   
+    div {
+      margin-bottom: 16px;
+    }
+   
+    label {
+  
+      display: block;
+      margin-bottom: 8px;
+      color: #1b467b;
+      font-weight: bold;
+    }
+   
+    input {
+      width: 80%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #1b467b;
+      border-radius: 4px;
+    }
+  
+     
+  
+    .loginBox{
+      width: 700px;
+      height: 450px;
+      background-color: #ccc;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  
+    .login-left{
+      background-color: #1b467b;
+      height: 450px;
+    }
+  
+  
+    .login-right{
+      background-color: white;
+      height: 450px;
+      padding-left: 30px;
+    }
+  
+    .registerButton{
+      float: right!important;
+      height: 30px;
+      width: 80px;
+      padding-bottom: 10%;
+      background-color: #1b467b;
+      color: white;
+    }
+  
+    .infoCenter{
+     
+      width: 315px;
+      height: 68px;
+      margin: 140px 60px;
+      
+      
+    }
+  
+    .infoCenter p{
+      font-family: Nunito,sans-serif;
+      color: white;
+      font-size:30px ;
+      
+      
+    }

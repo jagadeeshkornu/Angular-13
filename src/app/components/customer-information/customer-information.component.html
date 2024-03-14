@@ -1,0 +1,102 @@
+<div style="display: flex; align-items: center;">
+    <button type="button" class="btn" id="popupButton" (click)="openModal()" >
+      <i class="fa-solid fa-circle-plus"></i>&nbsp;Add New
+    </button>
+  
+    <div class="globalSearch" style="margin-left: auto;">
+      <form style="display: flex; align-items: center;">
+        <label for="GlobalSearch" style="color: black; font-size: 15px; font-weight: bold; font-family: Nunito, sans-serif;">Global Search:</label>
+        <input type="text" class="form-control" name="searchingValue" style="width: 90%;" [(ngModel)]="globalSearching" (ngModelChange)="globalSearch()">
+      </form>
+    </div>
+  </div>
+  
+  <div class="table-down">
+      <!--Prime ng table -->
+      <div class="card">
+        <p-table #dt dataKey="ID" [value]="customers" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5,10,15]" [scrollable]="true" scrollHeight="550px" 
+        selectionMode="single" [resizableColumns]="true" columnResizeMode="expand">
+  
+          
+          <ng-template pTemplate="header">
+             <tr>
+              <!-- Table-Header -->
+             
+                <th class="table-heading" pSortableColumn="CorporationID">Corporation <p-sortIcon field="CorporationID" style="font-size:12px;"></p-sortIcon></th>
+                <th class="table-heading" pSortableColumn="CustomerName">Customer Name <p-sortIcon field="CustomerName" style="font-size:12px;"></p-sortIcon></th>
+                <th class="table-heading" pSortableColumn="MobileNumber">Mobile Num <p-sortIcon field="MobileNumber" style="font-size:12px;"></p-sortIcon></th>
+                <th class="table-heading" pSortableColumn="EmailID">Email ID <p-sortIcon field="EmailID" style="font-size:12px;"></p-sortIcon></th>
+                <th class="table-heading" pSortableColumn="Status">Status<p-sortIcon field="Status" style="font-size:12px;"></p-sortIcon></th>
+                <th  class="table-heading" pSortableColumn="OpeningBalance">Balance <p-sortIcon field="OpeningBalance" style="font-size:12px;"></p-sortIcon></th>
+                <th class="table-heading" >Actions</th>
+                
+            
+              </tr>
+
+              <!-- Search Inputs -->
+              <!-- <tr>
+                <th>
+                    <input pInputText type="text" (input)="dt.filter($event.target, 'CorporationID', 'contains')" [value]="dt.filters['CorporationID'] ? dt.filters['CorporationID'] : ''"  placeholder="Corporation" class="p-column-filter">
+                </th>
+                <th>
+                    <input pInputText type="text" (input)="dt.filter($event.target, 'CustomerName', 'contains')" [value]="dt.filters['CustomerName'] ? dt.filters['CustomerName'] : ''" placeholder="Customer Name" class="p-column-filter-width">
+                </th>
+                <th>
+                    <input pInputText type="text"
+                        (input)="dt.filter($event.target, 'MobileNumber', 'contains')"
+                        [value]="dt.filters['MobileNumber'] ? dt.filters['MobileNumber'] : ''"
+                        placeholder="Mobile Num" class="p-column-filter-width">
+                </th>
+                <th>
+                    <input pInputText type="text"
+                        (input)="dt.filter($event.target, 'EmailID', 'contains')"
+                        [value]="dt.filters['EmailID'] ? dt.filters['EmailID'] : ''"
+                        placeholder="Email ID" class="p-column-filter-emailWidth">
+                </th>
+
+                <th>
+                    <input pInputText type="text"
+                        (input)="dt.filter($event.target, 'Status', 'contains')"
+                        [value]="dt.filters['Status'] ? dt.filters['Status'] : ''"
+                        placeholder="Status" class="p-column-filter">
+                </th>
+
+                <th>
+                    <input pInputText type="text"
+                        (input)="dt.filter($event.target, 'OpeningBalance', 'contains')"
+                        [value]="dt.filters['OpeningBalance'] ? dt.filters['OpeningBalance'] : ''"
+                        placeholder="Balance" class="p-column-filter">
+                </th>
+
+                <th></th>
+            </tr> -->
+
+          </ng-template>
+
+          <!-- Table-Body -->
+          <ng-template pTemplate="body" let-item>
+            <tr class="bodyData">
+              <td>{{item.CorporationID}}</td>
+              <td>{{item.CustomerName}}</td>
+              <td>{{item.MobileNumber  }}</td>
+              <td>{{item.EmailID}}</td>
+              <td>Active</td>
+              <td>{{item.OpeningBalance?.toFixed(2)}}</td>
+               
+              <td>
+                <button (click)="editCustomer(item.ID)" class="btn btn-sm" style="background-color: rgb(27,70,123); color: white;"><i class="fa-solid fa-pen-to-square" ></i></button>
+                  &nbsp;&nbsp;
+                <button (click)="deleteCustomer(item)" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+              </td>
+               
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5" class="text-danger">No data to Display.</td>
+            </tr>
+        </ng-template>
+        </p-table>
+      </div>
+    </div>

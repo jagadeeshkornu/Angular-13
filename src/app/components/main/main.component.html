@@ -1,0 +1,52 @@
+<div>
+  <app-header></app-header>
+
+  <div class="mainbar">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar col-lg-2 col-md-1" style="padding: 0px;">
+          <a  title="Purchaser">
+            <div  (click)="onSelect('purchaser')" class="sidebar-item" [ngClass]="selectedOption === 'purchaser'? 'selectedModule' :'unSelectedModule'">
+              <i class="fa-solid fa-cart-shopping"></i> &nbsp;&nbsp;Purchaser
+            </div>
+          </a>
+          
+          <a (click)="onSelect('seller')" title="Seller" >
+            <div class="sidebar-item"  [ngClass]="selectedOption === 'seller'? 'selectedModule' :'unSelectedModule'" >
+              <i class="fa-brands fa-sellcast"></i> &nbsp;&nbsp;Seller
+            </div>
+          </a>
+
+          <a (click)="onSelect('customer')" title="Customer" >
+            <div class="sidebar-item" [ngClass]="selectedOption === 'customer'? 'selectedModule' :'unSelectedModule'">
+              <i class="fa-brands fa-sellcast"></i> &nbsp;&nbsp;Customer
+            </div>
+          </a>
+
+          <a (click)="logOut()" title="Logout">
+            <div class="sidebar-item" [ngClass]="selectedOption === ''? 'selectedModule' :'unSelectedModule'" >
+              <i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Logout
+            </div>
+          </a>
+        </div>
+
+        <div class="mainheading col-lg-10 col-md-11">
+          <ng-container *ngIf="selectedOption === ''">
+            <app-purchaser-information></app-purchaser-information>
+          </ng-container>
+          <ng-container *ngIf="selectedOption === 'purchaser'">
+            <app-purchaser-information></app-purchaser-information>
+          </ng-container>
+          <ng-container *ngIf="selectedOption === 'seller'">
+            <app-seller-information></app-seller-information>
+          </ng-container>
+          <ng-container *ngIf="selectedOption === 'customer'">
+            <app-customer-information></app-customer-information>
+          </ng-container>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+

@@ -1,0 +1,47 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="col-md-10 col-sm-10 d-flex align-items-center">
+                <h4 class="modal-title" style="font-size: 17px;">Customer Type</h4>
+            </div>
+            <div class="col-md-2 col-sm-2 d-flex align-items-center">
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <form [formGroup]="customerTypeForm" (ngSubmit)="submitForm(customerTypeForm)">
+        <div class="modal-body">
+        
+                <div>
+                    <div class="row">
+                        <div class="col-md-12 form-group mb-2">
+                        <label for="CustomerTypeName">Customer Type Name</label><span class="text-danger">*</span>
+                        <input type="text" id="BusinessTypeName" placeholder="Enter Name" class="form-control" formControlName="CustomerTypeName">
+                        <div class="mt-1">
+                            <small *ngIf="(customerTypeForm.get('CustomerTypeName')?.hasError('required') && customerTypeForm.get('CustomerTypeName')?.touched) ||
+                            (customerTypeForm.get('CustomerTypeName')?.hasError('required') && submitted)">
+                                Customer Type Name Required.
+                            </small>       
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+        <div class="modal-footer">
+            <div class="row" style="width: 100%;">
+                <div class="col-md-6 col-sm-12 text-left leftButton">
+                    <button type="button" class="btn btn-danger" (click)="close()">Cancel</button>
+                </div>
+                <div class="col-md-6 col-sm-12 text-md-right savebutton">
+                    <button type="submit" class="btn mr-1" [disabled]="customerTypeForm.invalid">Save & Close</button>
+                    
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+
+    
+</div>

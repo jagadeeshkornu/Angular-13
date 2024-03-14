@@ -1,0 +1,69 @@
+<div style="display: flex; align-items: center;">
+  <button type="button" class="btn" id="popupButton" (click)="openModal()">
+    <i class="fa-solid fa-circle-plus"></i>&nbsp;Add New
+  </button>
+
+  <div class="globalSearch" style="margin-left: auto;">
+    <form style="display: flex; align-items: center;">
+      <label for="GlobalSearch" style="color: black; font-size: 15px; font-weight: bold; font-family: Nunito, sans-serif;">Global Search:</label>
+      <input type="text" class="form-control" name="searchingValue" style="width: 90%;" [(ngModel)]="globalSearching" (ngModelChange)="globalSearch()">
+    </form>
+  </div>
+</div>
+
+ 
+
+
+<div class="table-down">
+    <!--Prime ng table -->
+    <div class="card">
+      <p-table #dt1 dataKey="TranscationID" [value]="purchaser" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5,10,15]" [scrollable]="true" scrollHeight="550px"  
+      selectionMode="single" [resizableColumns]="true" columnResizeMode="expand" >
+
+        
+        <ng-template pTemplate="header">
+            <tr >
+            <ng-container *ngFor="let column of columns">
+                <th style="font:13px Nunito,sans-serif; font-weight: bold;" *ngIf="column.field !== 'Actions'" pSortableColumn="{{column.field}}">
+                {{column.header}} <p-sortIcon field="{{column.field}}" style="font-size:12px;"></p-sortIcon>
+                </th>
+                <th *ngIf="column.field === 'Actions'">{{column.header}}</th>
+            </ng-container>
+            </tr>
+            <!-- <tr *ngIf = "purchaser?.length != 0">
+              <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                  <input pInputText type="text" (input)="dt1.filter($event.target?.value, col.field, 'contains')" style="width: 90%" [value]="dt1.filters[col.field] ? dt1.filters[col.field].value : ''">
+              </th>
+              <th></th>
+            </tr> -->
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr class="bodyData">
+            <td>{{item.DealerName}}</td>
+            <td>{{item.Address1}}</td>
+            <td>{{item.Address2}}</td>
+            <td>{{item.City}}</td>
+            <td>{{item.State}}</td>
+            <td>{{item.ZipCode}}</td>
+            <td>{{item.DateOfPurchase | date:'yyyy-MM-dd'}}</td>
+            <td>{{item.Amount}}</td>
+            <td>{{item.PaymentMode}}</td>
+            <td>{{item.PaymentNumber}}</td>
+            <td>{{item.EmployeeID}}</td>
+            <td style="float: left;">
+              <button class="btn btn-sm" (click)="editPurchaser(item.TranscationID)" style="background-color: rgb(27,70,123); color: white;"><i class="fa-solid fa-pen-to-square" ></i></button>
+                  &nbsp;
+              <button (click)="deletePurchaser(item)" class="btn btn-danger btn-sm"  ><i class="fa-solid fa-trash"></i></button>
+               
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+              <td colspan="5" class="text-danger">No data to Display.</td>
+          </tr>
+      </ng-template>
+      </p-table>
+    </div>
+  </div>

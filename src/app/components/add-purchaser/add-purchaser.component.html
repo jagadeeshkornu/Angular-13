@@ -1,0 +1,227 @@
+<div class="modal-content container-fluid">
+
+    <!-- modal header -->
+    <div class="modal-header row">
+        <div class="col-md-6 col-sm-6 d-flex align-items-center" *ngIf="!isEdit">
+            <h4 class="modal-title">Add New Purchaser</h4>
+        </div>
+        <div class="col-md-6 col-sm-6 d-flex align-items-center" *ngIf="isEdit">
+            <h4 class="modal-title">Update Purchaser</h4>
+        </div>
+        <div class="col-md-6 col-sm-6 d-flex align-items-center">
+            <button type="button" class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- modal body -->
+    <form [formGroup]="purchaseForm" (ngSubmit)="submitForm(purchaseForm)" #purchaserForm="ngForm">
+
+        <div class="modal-body">
+
+            <div class="purchaserDetails">
+                <button type="button" class="btn" id="popupButton">Purchaser Details</button>
+            </div>
+
+            <div class="mt-5">
+                <!-- Row 1 -->
+                <div class="row">
+                    <!-- DealerName -->
+                    <div class="col-12 col-sm-12 col-md-3 form-group ">
+                        <label for="DealerName">Dealer Name</label><span class="text-danger">*</span>
+                        <input type="text" id="DealerName" placeholder="Enter Dealer Name" class="form-control" formControlName="DealerName">
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('DealerName')?.hasError('required') && purchaseForm.get('DealerName')?.touched) ||
+                            (purchaseForm.get('DealerName')?.hasError('required') && submitted)">
+                                DealerName is required
+                            </small>
+                            <small *ngIf="purchaseForm.get('DealerName')?.hasError('pattern')">
+                                DealerName is invalid
+                            </small>
+                        </div>
+                    </div>
+                    <!-- Address 1 -->
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="Address1">Address 1</label><span class="text-danger">*</span>
+                        <input type="text" id="Address1" placeholder="Enter Address 1" class="form-control" formControlName="Address1">
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('Address1')?.hasError('required') && purchaseForm.get('Address1')?.touched)||
+                            purchaseForm.get('Address1')?.hasError('required') && submitted">
+                                Address1 is required
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Address 1 -->
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="Address2">Address 2</label><span class="text-danger">*</span>
+                        <input type="text" id="Address2" placeholder="Enter Address 2" class="form-control" formControlName="Address2">
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('Address2')?.hasError('required') && purchaseForm.get('Address2')?.touched)||
+                            purchaseForm.get('Address2')?.hasError('required') && submitted">
+                                Address2 is required
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- ZipCode -->
+
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="Zipcode">Zipcode</label><span class="text-danger">*</span>
+                        <input type="text" id="Zipcode" placeholder="Enter Zipcode" class="form-control" formControlName="Zipcode">
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('Zipcode')?.hasError('required') && purchaseForm.get('Zipcode')?.touched)||
+                            (purchaseForm.get('Zipcode')?.hasError('required') && submitted)">
+                                Zipcode is required
+                            </small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Row 2 -->
+
+                <div class="row mt-4">
+
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="State">State</label><span class="text-danger">*</span>
+                        <select id="State" class="form-control" style="border-radius: 4px;" formControlName="State" (change)="onStateChange()">
+                            <option value="">Select</option>
+                            <option *ngFor="let state of states" [value]="state.StateID">{{ state.StateName }}</option>
+                        </select>
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('State')?.hasError('required') && purchaseForm.get('State')?.touched) ||
+                            (purchaseForm.get('State')?.hasError('required') && submitted)">
+                                State is required
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="City">City</label><span class="text-danger">*</span>
+                        <select id="City" class="form-control" style="border-radius: 4px;" formControlName="City">
+                            <option value="">Select</option>
+                            <option *ngFor="let city of cities" [value]="city.CityID">{{ city.CityName }}</option>
+                        </select>
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('City')?.hasError('required') && purchaseForm.get('City')?.touched) ||
+                            (purchaseForm.get('City')?.hasError('required') && submitted)">
+                                City is required
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-3 form-group"  >
+                        <label for="DateOfPurchase">Date of Purchase</label><span class="text-danger">*</span>
+                        <div class="d-flex align-items-center" >
+                            <p-calendar  [showIcon]="true" inputId="icon" formControlName="DateOfPurchase" ></p-calendar>
+                        </div>
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('DateOfPurchase')?.hasError('required') && purchaseForm.get('DateOfPurchase')?.touched) ||
+                            (purchaseForm.get('DateOfPurchase')?.hasError('required') && submitted)">
+                                Date Of Purchase is required
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-3 form-group ">
+                        <label for="Amount">Amount</label><span class="text-danger">*</span>
+                        <input type="text" class="form-control" id="Amount" placeholder="Amount" formControlName="Amount">
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('Amount')?.hasError('required') && purchaseForm.get('Amount')?.touched) ||
+                            (purchaseForm.get('Amount')?.hasError('required') && submitted)">
+                                Amount is required
+                            </small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Row 3 -->
+
+                <div class="row mt-4">
+                    <!-- PaymentMode -->
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="PaymentMode">Payment Mode</label><span class="text-danger">*</span>
+                        <select class="form-control" style="border-radius: 4px;" formControlName="PaymentMode">
+                            <option value="">Select</option>
+                            <option [value]="mode.PaymentMode" *ngFor="let mode of paymentModes">{{mode.PaymentModeName}}</option>
+                        </select>
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('PaymentMode')?.hasError('required') && purchaseForm.get('PaymentMode')?.touched) ||
+                            (purchaseForm.get('PaymentMode')?.hasError('required') && submitted)">
+                                Payment Mode is required
+                            </small>
+                        </div>
+                    </div>
+                    <!-- PaymentNumber -->
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="PaymentNumber">Payment Number</label><span class="text-danger">*</span>
+                        <input type="password" class="form-control" id="PaymentNumber" placeholder="Payment Number" formControlName="PaymentNumber">
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('PaymentNumber')?.hasError('required') && purchaseForm.get('PaymentNumber')?.touched) ||
+                            (purchaseForm.get('PaymentNumber')?.hasError('required') && submitted)">
+                                Payment Number is required
+                            </small>
+                        </div>
+                    </div>
+
+                    <!--EmployeeID  -->
+
+                    <div class="col-12 col-sm-12 col-md-3 form-group ">
+                        <label for="EmployeeID">Employee ID</label><span class="text-danger">*</span>
+                        <input type="text" class="form-control" id="EmployeeID" placeholder="Employee ID" formControlName="EmployeeID">
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('EmployeeID')?.hasError('required') && purchaseForm.get('EmployeeID')?.touched) ||
+                            (purchaseForm.get('EmployeeID')?.hasError('required') && submitted)">
+                                Employee ID is required
+                            </small>
+                        </div>
+                    </div>
+
+                    <!--EmployeeSign  -->
+                    <div class="col-12 col-sm-12 col-md-3 form-group ">
+                        <label for="EmployeeSign">Employee Sign</label><span class="text-danger">*</span>
+                        <input type="text" class="form-control" id="EmployeeSign" placeholder="Employee Sign" formControlName="EmployeeSign">
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('EmployeeSign')?.hasError('required') && purchaseForm.get('EmployeeSign')?.touched) ||
+                            (purchaseForm.get('EmployeeSign')?.hasError('required') && submitted)">
+                                EmployeeSign is required
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 4 -->
+                <div class="mt-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-3 form-group">
+                            <label for="UploadReceipt">Upload Receipt</label>
+                            <input type="file" class="form-control" id="UploadReceipt" formControlName="UploadReceipt">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal-footer -->
+        <div class="modal-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 text-left leftButton">
+                        <button type="button" class="btn btn-danger mr-1" (click)="resetForm(purchaseForm)">Reset</button>
+                        <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-md-right savebutton" *ngIf="!isEdit">
+                        <button type="submit" class="btn btn-primary" [disabled]="purchaserForm.invalid">Save & Close</button>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-md-right savebutton" *ngIf="isEdit">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

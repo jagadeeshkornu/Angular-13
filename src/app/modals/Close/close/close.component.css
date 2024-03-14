@@ -1,0 +1,27 @@
+.modal-contents {
+    position: relative;
+    max-width:500px; /* Optional: set a max-width for responsiveness */
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 0.3rem;
+    max-height: 70vh; /* Optional: set a max-height for the modal content */
+    /* Enable vertical scrolling if content exceeds the height */
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+
+.modal-body p{
+    text-align: center;
+}
+
+.modal-footer {
+    justify-content: center !important;
+}
+
+.modal-footer button {
+    border-radius: 40%;
+}

@@ -1,0 +1,134 @@
+<div class="modal-content container-fluid">
+
+    <!-- modal header -->
+    <div class="modal-header row">
+        <div class="col-md-6 col-sm-6 d-flex align-items-center">
+            <h4 class="modal-title">Add New Seller</h4>
+        </div>
+        <div class="col-md-6 col-sm-6 d-flex align-items-center">
+            <button type="button" class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- modal body -->
+    <form [formGroup]="purchaseForm" (ngSubmit)="submitForm(purchaseForm)" #purchaserForm="ngForm">
+
+        <div class="modal-body">
+
+            <div class="purchaserDetails">
+                <button type="button" class="btn" id="popupButton">Seller Details</button>
+            </div>
+
+            <div class="mt-5">
+                <!-- Row 1 -->
+                <div class="row">
+                  
+                    <!-- SellerName -->
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="SellerName">Seller Name</label><span class="text-danger">*</span>
+                        <input type="text" id="SellerName" placeholder="Enter Seller Name" class="form-control" formControlName="SellerName">
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('SellerName')?.hasError('required') && purchaseForm.get('SellerName')?.touched)||
+                            purchaseForm.get('SellerName')?.hasError('required') && submitted">
+                                Seller Name is required
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- sellersDateOfBirth-->
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="sellersDateOfBirth">Seller DOB</label><span class="text-danger">*</span>
+                        
+                        <div class="d-flex align-items-center" >
+                            <p-calendar  [showIcon]="true" inputId="icon" placeholder="Enter seller DOB" formControlName="sellersDateOfBirth" ></p-calendar>
+                        </div>
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('sellersDateOfBirth')?.hasError('required') && purchaseForm.get('sellersDateOfBirth')?.touched)||
+                            purchaseForm.get('sellersDateOfBirth')?.hasError('required') && submitted">
+                                Seller DOB is required
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- DealerProof -->
+
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="DealerProofID">DealerProof</label><span class="text-danger">*</span>
+                        <select id="DealerProofID" class="form-control" style="border-radius: 4px;" formControlName="DealerProofID">
+                            <option value="">Select</option>
+                            <option *ngFor="let id of dealerProofInfo" [value]="id.DealerProofID">{{ id.DealerProofName }}</option>
+                        </select>
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('DealerProofID')?.hasError('required') && purchaseForm.get('DealerProofID')?.touched) ||
+                            (purchaseForm.get('DealerProofID')?.hasError('required') && submitted)">
+                                DealerProof is required
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- DealerIdentity -->
+
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="DealerIdentity">DealerIdentity</label><span class="text-danger">*</span>
+                        <select id="DealerIdentity" class="form-control" style="border-radius: 4px;" formControlName="DealerIdentity">
+                            <option value="">Select</option>
+                            <option *ngFor="let id of dealeridentityInfo" [value]="id.DealerIdentityID">{{ id.DealerIdentityName }}</option>
+                        </select>
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('DealerIdentity')?.hasError('required') && purchaseForm.get('DealerIdentity')?.touched) ||
+                            (purchaseForm.get('DealerIdentity')?.hasError('required') && submitted)">
+                                DealerIdentity is required
+                            </small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Row 2 -->
+
+                <div class="row mt-5">
+
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="sellersSignature">Seller Signature</label>
+                        <input type="file" class="form-control" id="sellersSignature" formControlName="sellersSignature">
+                    </div>
+                    
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="sellersIdentification">Seller Identification</label>
+                        <input type="file" class="form-control" id="UploadReceipt" formControlName="sellersIdentification">
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-3 form-group">
+                        <label for="LicPlateNumber">License Number</label><span class="text-danger">*</span>
+                        <input type="text" id="LicPlateNumber" placeholder="Enter LicPlateNumber " class="form-control" formControlName="LicPlateNumber">
+                        <div class="mt-1">
+                            <small *ngIf="(purchaseForm.get('LicPlateNumber')?.hasError('required') && purchaseForm.get('LicPlateNumber')?.touched)||
+                            purchaseForm.get('LicPlateNumber')?.hasError('required') && submitted">
+                                License Number is required
+                            </small>
+                        </div>
+                    </div>
+
+
+                </div>       
+            </div>
+        </div>
+
+        <!-- Modal-footer -->
+        <div class="modal-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 text-left leftButton">
+                        <button type="button" class="btn btn-danger mr-1" (click)="resetForm(purchaseForm)">Reset</button>
+                        <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-md-right savebutton">
+                        <button type="submit" class="btn btn-primary" [disabled]="purchaserForm.invalid">Save & Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

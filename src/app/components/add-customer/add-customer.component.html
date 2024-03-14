@@ -1,0 +1,542 @@
+<div class="modal-content container-fluid">
+    <!-- modal header -->
+    <div class="modal-header row">
+        <div class="col-md-6 col-sm-6 d-flex align-items-center">
+            <h4 class="modal-title" *ngIf="!isEdit">Add New Customer</h4>
+            <h4 class="modal-title" *ngIf="isEdit">Update Customer</h4>
+        </div>
+        <div class="col-md-6 col-sm-6 d-flex align-items-center">
+            <button type="button" class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- modal body -->
+    <form [formGroup]="customerForm" (ngSubmit)="submitForm(customerForm)">  
+            <div class="modal-body overflow-y-scroll">
+                <!-- Form Begins -->
+                <div class="purchaserDetails" style="display: flex; flex-wrap: wrap; gap:10px;">
+                    <div>
+                        <button type="button" class="btn" [ngClass]="activeButton === 'customerInformation' ? 'activeButton' : 'inactiveButton'"
+                        (click)="setActiveButton('customerInformation')">Customer Information</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn" [ngClass]="activeButton === 'addressDetails' ? 'activeButton' : 'inactiveButton' "  
+                        (click)="setActiveButton('addressDetails')">Address Details</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn" [ngClass]="activeButton === 'additionalDetails' ? 'activeButton' :'inactiveButton'"
+                         (click)="setActiveButton('additionalDetails')">Additional Details</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn" [ngClass]="activeButton === 'notes' ? 'activeButton' : 'inactiveButton'"
+                         (click)="setActiveButton('notes')">Notes & Attachments</button>
+                    </div>
+                </div>
+                <!-- Form Content -->
+        
+                <div class="mt-2 form-content">
+                    
+                    <ng-container *ngIf="activeButton === 'customerInformation'">
+                        <div class="row ">
+                            <div class="col-md-6 border-rightSide">
+                                <div class="row">
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="CorporationID">Corporation</label><span class="text-danger">*</span>
+                                        <select id="CorporationID" class="form-control" style="border-radius: 4px;" formControlName="CorporationID"
+                                        [attr.readonly]="disabledDropdown ? true : null">
+                                        <option [disabled]="disabledDropdown" value="" selected>Select One corporation</option>
+                                        <option [disabled]="disabledDropdown" *ngFor="let corp of corporations" [value]="corp.CorporationID">{{corp.CorporationName}}</option>
+                                        </select>
+
+                                        <div class="mt-1">
+                                            <small *ngIf="(customerForm.get('CorporationID')?.hasError('required') && customerForm.get('CorporationID')?.touched) ||
+                                            (customerForm.get('CorporationID')?.hasError('required') && submitted)">
+                                                Corporation is required
+                                        </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="CustomerName">Customer name</label><span class="text-danger">*</span>
+                                        <input type="text" id="CustomerName" placeholder="Enter Customer Name" class="form-control" formControlName="CustomerName">
+                                        <div class="mt-1">
+                                            <small *ngIf="(customerForm.get('CustomerName')?.hasError('required') && customerForm.get('CustomerName')?.touched) ||
+                                            (customerForm.get('CustomerName')?.hasError('required') && submitted)">
+                                                Customer name is required
+                                        </small>
+                                        <small *ngIf="customerForm.get('CustomerName')?.hasError('pattern')">
+                                            Customer Name Must be greater than 2 characters and less than 35 characters.
+                                        </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="FederalID">Federal ID</label>
+                                        <input type="text" id="FederalID" placeholder="Enter Federal ID" class="form-control" formControlName="FederalID" (input)="onFederalIdInput($event)">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('FederalID')?.hasError('pattern')">
+                                                Please enter a valid Federal ID
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="CompanyName">Company Name</label>
+                                        <input type="text" id="CompanyName" placeholder="Enter Company Name" class="form-control" formControlName="CompanyName">
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="CustomerID">Customer ID</label>
+                                        <input type="text" id="CustomerID" placeholder="Enter Customer ID" class="form-control" formControlName="CustomerID">
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="ChecksToBePrintedAs">Checks to be Printed as</label>
+                                        <input type="text" id="ChecksToBePrintedAs"   class="form-control" formControlName="ChecksToBePrintedAs">
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="DoingBusinessAs">Doing Business as</label>
+                                        <input type="text" id="DoingBusinessAs"  class="form-control" formControlName="DoingBusinessAs">
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="VendorID">Vendor ID</label>
+                                        <input type="text" id="VendorID" placeholder="Enter Vendor ID" class="form-control" formControlName="VendorID">
+                                    </div>
+
+                        
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="addCustomerToAllComponents" class="checkbox checkbox-primary">
+                                            <input type="checkbox" id="addCustomerToAllComponents"  formControlName="addCustomerToAllComponents" 
+                                            >&nbsp;
+                                            <span style="cursor: pointer;"> Add this customer to all corporations</span>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                
+                
+                            <div class="col-md-6 ">
+                                <div class="row">
+                                    <div class="col-md-3 form-group mb-2">
+                                        <label for="SalutionID">Salutation</label> 
+                                        <select id="SalutionID"  class="form-control" style="border-radius: 4px;" formControlName="SalutionID">
+                                            <option value="">Select</option>
+                                            <option *ngFor="let item of salutations" [value]="item.SalutionID">{{item.SalutionName}}</option>
+                                        </select>
+                                    </div>
+                
+                                    <div class="col-md-3 form-group mb-2">
+                                        <label for="FirstName">First Name</label>
+                                        <input type="text" id="FirstName" placeholder="Enter First Name" class="form-control" formControlName="FirstName">  
+                                    </div>
+                
+                                    <div class="col-md-3 form-group mb-2">
+                                        <label for="MiddleName">Middle Name</label>
+                                        <input type="text" id="MiddleName" placeholder="Enter Middle Name" class="form-control" formControlName="MiddleName">
+                                    </div>
+                
+                                    <div class="col-md-3 form-group mb-2">
+                                        <label for="LastName">Last Name</label>
+                                        <input type="text" id="LastName" placeholder="Enter Last Name" class="form-control" formControlName="LastName">
+                                    </div>
+                
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="MobileNumber">Mobile Number</label>
+                                        <input type="text" id="MobileNumber" placeholder="Enter Mobile Number" class="form-control" formControlName="MobileNumber">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('MobileNumber')?.hasError('pattern')">
+                                                Mobile Number is invalid
+                                            </small>
+                                        </div>
+                                    </div>
+                
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="AlternativeNumber">Alternative Number</label>
+                                        <input type="text" id="AlternativeNumber" placeholder="Enter Alternative Number" class="form-control" formControlName="AlternativeNumber">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('AlternativeNumber')?.hasError('pattern')">
+                                                Alternative Number is invalid
+                                            </small>
+                                        </div>
+                                    </div>
+                
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="WorkNumber">Work Number</label>
+                                        <input type="text" id="WorkNumber"  class="form-control" formControlName="WorkNumber">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('WorkNumber')?.hasError('pattern')">
+                                                Work Number is invalid
+                                            </small>
+                                        </div>
+                                    </div>
+                
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="DealerName">Fax Number</label>
+                                        <input type="text" id="FaxNumber" placeholder="Enter Fax Number" class="form-control" formControlName="FaxNumber">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('FaxNumber')?.hasError('pattern')">
+                                                Fax Number is invalid
+                                            </small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="EmailID">Email ID</label>
+                                        <input type="text" id="EmailID" placeholder="Enter Email ID" class="form-control" formControlName="EmailID">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('EmailID')?.hasError('pattern')">
+                                                Please Enter valid email id.
+                                            </small>
+                                        </div>
+                                    </div>
+                
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="CCEmailID">CC Email ID</label>
+                                        <input type="text" id="CCEmailID" placeholder="Enter CC Email ID" class="form-control" formControlName="CCEmailID">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('CCEmailID')?.hasError('pattern')">
+                                                Please Enter valid CCEmail ID
+                                            </small>
+                                        </div>
+                                    </div>
+                
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="Website">Website</label>
+                                        <input type="text" id="Website" placeholder="Enter Website" class="form-control" formControlName="Website">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('Website')?.hasError('pattern')">
+                                                Please enter a valid Website.
+                                            </small>
+                                        </div>
+                                        
+                                    </div>
+                
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="AccountNumber">Account Number</label>
+                                        <input type="text" id="AccountNumber" placeholder="Enter Account Number" class="form-control" formControlName="AccountNumber">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('AccountNumber')?.hasError('pattern')">
+                                                Invalid Account Number.
+                                            </small>
+                                        </div>
+                                    </div>
+                
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="OpeningBalance">Opening Balance</label>
+                                        <input type="text" id="OpeningBalance" value="0.00" class="form-control" formControlName="OpeningBalance" (input)="onInput($event)" style="text-align: right;">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('OpeningBalance')?.hasError('pattern')">
+                                                Enter valid numeric expression.
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="AsOfDate">As of</label>
+                                        <p-calendar  [showIcon]="true" inputId="icon" formControlName="AsOfDate" class="my-calendar" ></p-calendar>
+                                    </div>
+                                    
+                
+                                </div>
+                            </div>
+                           </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="activeButton === 'addressDetails'">
+                        <div class="row">
+                            <div class="col-md-6 border-rightSide">
+                                <h6>
+                                    <strong style="font-size: .913rem;">Billing Address</strong>
+                                </h6>
+                                <div class="row mt-1">
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="BAName">Name</label>
+                                        <input type="text" class="form-control" id="Name" formControlName="BAName" placeholder="Enter Name">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('BAName')?.hasError('pattern')">
+                                                Name Must be greater than 2 characters and less than 35 characters.
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 form-group mb-2">
+                                        <label for="BAAddress">Address</label>
+                                        <textarea type="text" class="form-control"  id="BAAddress" formControlName="BAAddress" placeholder="Enter Addrress" style="height: 70px;"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="CountryID">Country</label>
+                                        <select class="form-control"  formControlName="CountryID" (change)="onCountryChange()" placeholder="Select one Country">
+                                            <option value=""  selected>Select one Country</option>
+                                            <option *ngFor="let ctry of countries" [value]="ctry.CountryID">{{ctry.CountryName}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="StateID">State</label>
+                                        <select class="form-control" formControlName="StateID" >
+                                            <option value="" selected>Select one State</option>
+                                            <option *ngFor="let state of customerStates" [value]="state.StateID">{{state.StateName}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="BACity">City</label>
+                                        <input type="text" class="form-control" id="BACity" formControlName="BACity" placeholder="Enter City">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="ZipCode">Zipcode</label>
+                                        <input type="text" class="form-control" id="Name" formControlName="ZipCode" placeholder="Enter Zipcode">
+                                        <div class="mt-1">
+                                            <small *ngIf="customerForm.get('ZipCode')?.hasError('pattern')">
+                                                Zipcode is invalid.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>              
+                 
+                            </div>
+                            <div class="col-md-6 form-group mb-2">
+                                <h6>
+                                    <strong style="font-size: .913rem;">Delivery Address</strong>
+                                </h6>
+                                <div class="mb-2">
+                                    <label for="SameDeliveryAddress" class="checkbox checkbox-primary" >
+                                        <input type="checkbox" id="SameDeliveryAddress"  formControlName="SameDeliveryAddress" (change)="onAddressChange()"
+                                        >&nbsp;
+                                        <span style="cursor: pointer;">Same as Billing Address</span>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <ng-container *ngIf="!sameAddress">
+                                    <div class="row ">
+                                        <div class="col-md-4 form-group mb-2">
+                                            <label for="DAName">Name</label>
+                                            <input type="text" class="form-control" id="DAName" formControlName="DAName" placeholder="Enter Name">
+                                            <div class="mt-1">
+                                                <small *ngIf="customerForm.get('DAName')?.hasError('pattern')">
+                                                     Name Must be greater than 2 characters and less than 35 characters.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 form-group mb-2">
+                                            <label for="DAAddress">Address</label>
+                                            <textarea type="text" class="form-control" id="DAAddress" formControlName="DAAddress" placeholder="Enter Address" style="height: 70px;"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-md-4 form-group mb-2">
+                                            <label for="DACountryID">Country</label>
+                                             <select class="form-control" formControlName="DACountryID" (change)="onCountryChange()" >
+                                                <option value="" selected>Select one Country</option>
+                                                <option *ngFor="let ctry of countries" [value]="ctry.CountryID">{{ctry.CountryName}}</option>
+                                            </select>
+                     
+                                        </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="DAStateID">State</label>
+                                        <select class="form-control" formControlName="DAStateID" >
+                                            <option value="" selected>Select one State</option>
+                                            <option *ngFor="let state of customerStates" [value]="state.StateID">{{state.StateName}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-2">
+                                        <label for="DACity">City</label>
+                                        <input type="text" class="form-control" id="DACity" formControlName="DACity" placeholder="Enter Your City">
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 form-group mb-2">
+                                            <label for="DAZipCode">Zipcode</label>
+                                            <input type="text" class="form-control" id="DAZipCode" formControlName="DAZipCode" placeholder="Enter Your Zipcode">
+                                            <div class="mt-1">
+                                                <small *ngIf="customerForm.get('DAZipCode')?.hasError('pattern')">
+                                                    Zipcode is invalid.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>              
+                            </div>    
+                        </div>
+                        
+                        
+                    </ng-container>
+
+                    <ng-container *ngIf="activeButton === 'additionalDetails'"> 
+                        <div class="row ">
+                            <div class="col-md-2 form-group ">
+                                <label for="BusinessTypeID">Business Type</label>
+                                <div class="d-flex">
+                                    <select class="form-control" id="BusinessTypeID" formControlName="BusinessTypeID">
+                                        <option value="" selected>Select One</option>
+                                        <option *ngFor="let type of businessType" [value]="type.BusinessTypeID">{{ type.BusinessTypeName }}</option>
+                                    </select>
+                                    <button class="btn btn-secondary" type="button"  (click)="openModal()">
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-2 form-group mb-2">
+                                <label>Credit Days</label>
+                                <div class="d-flex">
+                                    <select class="form-control" id="CreditDayID" formControlName="CreditDayID">
+                                        <option value="" selected>Select net days</option>
+                                        <option *ngFor="let day of creditDays" [value]="day.CreditDayID">{{ day.CreditDayName }}</option>
+                                    </select>
+                                    <button class="btn btn-secondary" type="button" >
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                    </button>  
+                                </div> 
+                            </div>
+
+
+                            <div class="col-md-2 form-group">
+                                <label for="DiscountPercentage">Discount Percentage </label>
+                                <input type="text" class="form-control" id="DiscountPercentage" (input)="onInput($event)" formControlName="DiscountPercentage" style="text-align: right;">
+                                 
+                                <small *ngIf="customerForm.get('DiscountPercentage')?.hasError('pattern')">
+                                  Invalid discount format. Please enter a valid percentage.
+                                </small>
+                                <small *ngIf="customerForm.get('DiscountPercentage')?.hasError('min')">
+                                  Discount percentage cannot be negative.
+                                </small>
+                                <small *ngIf="customerForm.get('DiscountPercentage')?.hasError('max')">
+                                  Discount percentage cannot exceed 100.
+                                </small>
+                              </div>
+                              <div class="col-md-2 form-group">
+                                <label>Discount Account</label>
+                                <div class="d-flex">
+                                  <input type="text" name="DiscountAccount" id="DiscountAccount" class="form-control  " formControlName="DiscountAccount">
+                                    <select  class="form-control" id="DiscountAccount"  style="width: 15%;" (change)="onDropdownChange($event)">
+                                        <option value="">Select one</option>
+                                        <option *ngFor="let d of DiscountAccounts" [value]="d.DiscountAccountName">{{ d.DiscountAccountName }}</option>
+                                    </select>
+                                  <button class="btn btn-secondary" type="button">
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                  </button>
+                                </div>
+                              </div>
+                              
+
+                             <div class=" col-md-2 form-group">
+                                <label>Send Money</label>
+                                <div class="d-flex">
+                                    <select class="form-control" id="SendMethodID" formControlName="SendMethodID">
+                                        <option value="" selected>Select One</option>
+                                        <option *ngFor="let s of sendMethod" [value]="s.SendMethodID">{{ s.SendMethodName }}</option>
+                                    </select>
+                                    <button class="btn btn-secondary" type="button">
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                    </button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class=" col-md-2 form-group">
+                                <label>Customer Type</label>
+                                <div class="d-flex">
+                                    <select class="form-control" id="CustomerTypeID" formControlName="CustomerTypeID">
+                                        <option value="" selected>Select One</option>
+                                        <option *ngFor="let id of customerType" [value]="id.CustomerTypeID">{{ id.CustomerTypeName }}</option>
+                                    </select>
+                                    <button class="btn btn-secondary" type="button" (click)="openCustomerTypeModal()" >
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                    </button>
+                                   
+                                </div>
+                            </div>
+
+
+                            <div class=" col-md-2 form-group">
+                                <label>Payment Method</label>
+                                <div class="d-flex">
+                                    <select class="form-control" id="PaymentMethodID" formControlName="PaymentMethodID">
+                                        <option value="" selected>Select One</option>
+                                        <option *ngFor="let id of paymentMethod" [value]="id.PaymentMethodID">{{ id.PaymentMethodName }}</option>
+                                    </select> 
+                                    <button class="btn btn-secondary" type="button"  >
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <div class=" col-md-2 form-group">
+
+                                <label for="COI_ExpirationDate">COI Expiration Date</label>
+                                <p-calendar placeholder="Date Time" [showIcon]="true" inputId="icon" formControlName="COI_ExpirationDate" ></p-calendar>
+                                
+                            </div>
+
+                            <div class=" col-md-2 form-group">
+                                <label for="MSA_ExpirationDate">MSA Expiration Date</label>
+                                    <p-calendar  placeholder="Date Time" [showIcon]="true" inputId="icon" formControlName="MSA_ExpirationDate" ></p-calendar>
+                            </div>
+                            
+                            <!-- <div class=" col-md-3 form-group mb-2 checking">
+                                <label for="paymentmode">Payment Mode</label><span class="text-danger"></span>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label class="checkbox  mt-2 ">
+                                            <input type="checkbox" style="height: 15px; width: 15px;" formControlName="isfortePayment" >&nbsp;&nbsp;
+                                            <span>FortePay</span>          
+                                        </label>
+                                    </div>
+                                    <div class="col-md-5">
+         
+                                        <label class="checkbox   mt-2">
+                                            <input type="checkbox"  style="height: 15px; width: 15px;" formControlName="isswirePayment">&nbsp;&nbsp;
+                                            <span>SwirePay</span>
+                                             
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                            </div>  -->
+
+                        </div>
+
+                    </ng-container>
+
+
+                    <ng-container *ngIf="activeButton === 'notes'">
+                       <div class="row mt-2">
+                            <div class="col-md-6 form-group">
+                                <label for="Notes">Notes</label>
+                                <textarea type="text" class="form-control" id="Notes" formControlName="Notes" placeholder="Enter Notes" style="height: 70px;"></textarea>
+                            </div>
+                       </div>
+                       <div class="row mt-2 ">
+                            <div class="col-md-4 form-group">
+                                <label for="UploadFile">UploadFile</label>
+                                <input type="file" class="form-control"  name="file" id="fileUpload">
+                            </div>
+                       </div>
+                    </ng-container>
+
+                </div>
+            </div>
+
+            <!-- Modal-footer -->
+    <div class="modal-footer">
+        <div  style="width: 100%;">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 text-left leftButton">
+                    <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+                </div>
+                <div class="col-md-6 col-sm-12 text-md-right savebutton">
+                    <button type="submit" (click)="save('onlySave')" *ngIf="!isEdit" class="btn mr-1" [disabled]="customerForm.invalid">Save & Close</button>
+                    <button type="submit" (click)="save('saveNew')" *ngIf="!isEdit" class="btn" [disabled]="customerForm.invalid">Save & New</button>
+                    <button type="submit" *ngIf="isEdit" class="btn">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+
+    </form>
+    
+</div>

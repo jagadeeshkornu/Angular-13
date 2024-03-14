@@ -1,0 +1,73 @@
+.modal-dialog{
+    max-width: 800px;
+    margin: 0 auto;
+ }
+
+ .modal-content {
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 0.3rem;
+     
+}
+
+.modal-header {
+    
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 10px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+ 
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+    
+}
+.modal-footer{
+    background: #f8f9fa;
+}
+
+
+.form-group label{
+    font-size: 13px;
+    color: #41536a;
+    margin-bottom: 4px;
+}
+
+small{
+    font-family: Nunito,sans-serif;
+    font-size: 12px;
+    color: #df0029;
+    float: left;
+    letter-spacing: .3px;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+
+
+.leftButton button{
+    background-color: #DA726F;
+    font-size: 14.5px;
+    font-family: Nunito,sans-serif;
+    float: left;
+}
+
+.leftButton button:hover{
+    background-color: rgb(220, 32, 32);
+}
+
+.savebutton button{
+    background-color:#1B467B;
+    font-size: 14.5px;
+    color: white;
+}

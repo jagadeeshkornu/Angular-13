@@ -1,0 +1,51 @@
+.mainnavbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Set a higher z-index if needed to ensure it appears above other elements */
+  background-color:white; /* Set your desired background color */
+  color: white;
+  border-bottom: 1px solid #F5F5F5;
+
+}
+
+.sidebar{
+    max-width: 14%;
+}
+
+.mainheading {
+  display: flex;
+  align-items: center;
+  
+}
+
+.icon-list {
+  list-style: none;
+  display: flex;
+  color:#1B467B;
+  padding-top: 15px;
+  
+}
+
+.icon-item {
+  margin:0px 15px; /* Adjust the margin between icons as needed */
+  cursor: pointer;
+  font-size: 18px;
+  color: #1B467B;
+  
+}
+
+
+.icon-item i{
+    padding:7px;
+}
+
+.icon-item i:hover,.fa-house{
+    background-color:  #1B467B;
+    color: white;
+    border-radius: 5px;
+}
+
+
+

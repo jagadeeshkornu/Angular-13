@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="loginBox">
+       <div class="row"  >
+         <div class="col-lg-7 col-md-7 col-sm-7 login-left">
+          <div class="infoCenter">
+            <p>Purchaser</p>
+            <p> Seller</p>
+            <p>Information</p>
+        </div>
+         </div>
+         <div class="col-lg-5 col-md-5 col-sm-5 login-right">
+           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+             <div>
+               <h2 style="color: #1b467b;font-weight: bold; font-size:20px;" class="py-5">LOGIN</h2>
+             </div>
+             <div>
+               <label for="username"> Username:</label>
+               <input type="text" id="Username" formControlName="UserName"  required>
+             </div>
+            
+             <div>
+               <label for="password">Password:</label>
+               <input type="password" id="password" formControlName="Password" required>
+               <!-- <p-password [(ngModel)]="value3" [toggleMask]="true"></p-password> -->
+             </div>
+          
+             <div>
+                 <a routerLink="/register" style="text-decoration: none;color:  #1b467b;cursor: pointer;">Create an Account</a>
+             </div>
+             <p [ngClass]="color">{{responseMsg}}</p>
+             <input type="submit" value="Login" class="registerButton">
+           </form>
+         </div>
+     </div>
+     </div>

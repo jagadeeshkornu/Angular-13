@@ -1,0 +1,54 @@
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-10 col-sm-10 d-flex align-items-center">
+                    <h4 class="modal-title" style="font-size: 17px;">Add New Purchaser</h4>
+                </div>
+                <div class="col-md-2 col-sm-2 d-flex align-items-center">
+                    <button type="button" class="close" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <form [formGroup]="businessForm" (ngSubmit)="submitForm(businessForm)">
+            <div class="modal-body">
+            
+                    <div>
+                        <div class="row">
+                            <div class="col-md-12 form-group mb-2">
+                            <label for="BusinessType">Business Type Name</label><span class="text-danger">*</span>
+                            <input type="text" id="BusinessTypeName" placeholder="Enter Name" class="form-control" formControlName="BusinessTypeName">
+                            <div class="mt-1">
+                                <small *ngIf="(businessForm.get('BusinessTypeName')?.hasError('required') && businessForm.get('BusinessTypeName')?.touched) ||
+                                (businessForm.get('BusinessTypeName')?.hasError('required') && submitted)">
+                                    Name is required
+                                </small>       
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group mb-2">
+                            <label for="Description">Description</label> 
+                            <textarea type="text" id="Description" class="form-control" formControlName="Description" style="height: 70px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+                <div class="row" style="width: 100%;">
+                    <div class="col-md-6 col-sm-12 text-left leftButton">
+                        <button type="button" class="btn btn-danger" (click)="close()">Cancel</button>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-md-right savebutton">
+                        <button type="submit" class="btn mr-1" [disabled]="businessForm.invalid">Save & Close</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+
+        
+    </div>
